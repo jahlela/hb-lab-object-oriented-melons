@@ -1,6 +1,7 @@
 """This file should have our order classes in it."""
 
 import random
+import datetime
 
 class AbstractMelonOrder(object):
     """ You fill in the rest """
@@ -13,10 +14,31 @@ class AbstractMelonOrder(object):
         self.qty = qty
         self.shipped = False
 
+    # add an extra $4 charge to each melon ordered during morning rush hour 
+    # (from 8-11am, Monday-Friday)
+    def get_base_price(self):
+
+        base_price = random.randint(5,9)
+
+        now = datetime.datetime.today()
+
+        day = now.weekday()
+        time = now.hour
+
+        # Check if today is Monday - Friday (0-4 in datetime)
+        if day >= 0 and day < 5:
+            # Check if time is between 8 and 11am.
+            if time >= 8 and time < 11:
+                # Increase base_price by 4
+                base_price += 4
+
+
+        return base_price
+
     def get_total(self):
         """Calculate price."""
 
-        base_price = 5
+        base_price = self.get_base_price()
 
         if self.species == "christmas": 
             base_price = base_price * 1.5

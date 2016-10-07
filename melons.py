@@ -1,19 +1,17 @@
 """This file should have our order classes in it."""
 
 
+class DomesticMelonOrder(object):
+    """A domestic (in the US) melon order."""
 
-class AbstractMelonOrder(object):
-    """ You fill in the rest """
-
-
-    def __init__(self, species, qty, order_type, tax):
+    def __init__(self, species, qty):
         """Initialize melon order attributes"""
 
         self.species = species
         self.qty = qty
         self.shipped = False
-        self.order_type = order_type
-        self.tax = tax
+        self.order_type = "domestic"
+        self.tax = 0.08
 
     def get_total(self):
         """Calculate price."""
@@ -28,23 +26,32 @@ class AbstractMelonOrder(object):
         self.shipped = True
 
 
+class InternationalMelonOrder(object):
+    """An international (non-US) melon order."""
 
+    def __init__(self, species, qty, country_code):
+        """Initialize melon order attributes"""
 
-class DomesticMelonOrder(AbstractMelonOrder):
-    """ You fill in the rest """
+        self.species = species
+        self.qty = qty
+        self.country_code = country_code
+        self.shipped = False
+        self.order_type = "international"
+        self.tax = 0.17
 
-    self.order_type = "domestic"
-    self.tax = 0.08
+    def get_total(self):
+        """Calculate price."""
 
+        base_price = 5
+        total = (1 + self.tax) * self.qty * base_price
+        return total
 
-class InternationalMelonOrder(AbstractMelonOrder):
-    """ You fill in the rest """
+    def mark_shipped(self):
+        """Set shipped to true."""
 
-    self.order_type = "international"
-    self.tax = 0.17
+        self.shipped = True
 
     def get_country_code(self):
         """Return the country code."""
 
         return self.country_code
-
