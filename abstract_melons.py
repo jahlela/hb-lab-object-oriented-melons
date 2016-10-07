@@ -1,5 +1,6 @@
 """This file should have our order classes in it."""
 
+import random
 
 class AbstractMelonOrder(object):
     """ You fill in the rest """
@@ -69,14 +70,17 @@ class GovernmentMelonOrder(AbstractMelonOrder):
     order_type = "government"
     tax = 0
 
-    def __init__(self, species, qty, passed_inspection):
+    # Don't call the super with passed_inspection because it's not expecting it
+    # and it will be available directly from the instance that we're sending
+    def __init__(self, species, qty, passed_inspection = False):
         """Initialize melon order attributes"""
 
-        self.passed_inspection = False
+        self.passed_inspection = passed_inspection
 
         super(GovernmentMelonOrder, self).__init__(species, qty)
 
-    def mark_inspection(self):
+    def mark_inspection(self, passed):
         """Set shipped to true."""
 
-        self.passed_inspection = True
+        if passed:
+            self.passed_inspection = True
