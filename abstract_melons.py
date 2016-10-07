@@ -1,10 +1,8 @@
 """This file should have our order classes in it."""
 
 
-
 class AbstractMelonOrder(object):
     """ You fill in the rest """
-
 
 
     def __init__(self, species, qty):
@@ -53,6 +51,9 @@ class InternationalMelonOrder(AbstractMelonOrder):
         """Initialize melon order attributes"""
 
         self.country_code = country_code
+
+        # Don't call the super with country_code because it's not expecting it
+        # and it will be available directly from the instance that we're sending
         super(InternationalMelonOrder, self).__init__(species, qty)
 
     def get_country_code(self):
@@ -67,7 +68,17 @@ class GovernmentMelonOrder(AbstractMelonOrder):
 
     tax = 0
 
-    def mark_shipped(self):
+    def __init__(self, species, qty, passed_inspection):
+        """Initialize melon order attributes"""
+
+        self.passed_inspection = False
+
+        super(GovernmentMelonOrder, self).__init__(species, qty)
+
+    def mark_inspection(self):
         """Set shipped to true."""
 
-        self.shipped = True
+        if self.passed_inspection:
+            self.passed_inspection = True
+
+        return self.passed_inspection
