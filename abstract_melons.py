@@ -66,6 +66,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
 class GovernmentMelonOrder(AbstractMelonOrder):
     """ You fill in the rest """
 
+    order_type = "government"
     tax = 0
 
     def __init__(self, species, qty, passed_inspection):
@@ -78,7 +79,4 @@ class GovernmentMelonOrder(AbstractMelonOrder):
     def mark_inspection(self):
         """Set shipped to true."""
 
-        if self.passed_inspection:
-            self.passed_inspection = True
-
-        return self.passed_inspection
+        self.passed_inspection = True
