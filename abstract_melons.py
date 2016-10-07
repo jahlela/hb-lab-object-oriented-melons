@@ -13,7 +13,6 @@ class AbstractMelonOrder(object):
         self.species = species
         self.qty = qty
         self.shipped = False
-        # Should this go here? 
         self.country_code = country_code
 
     def get_total(self):
@@ -24,10 +23,11 @@ class AbstractMelonOrder(object):
         if self.species == "christmas": 
             base_price = base_price * 1.5
 
-        if self.order_type == "international" and self.qty < 10:
-            base_price = base_price + 3
-
         total = (1 + self.tax) * self.qty * base_price
+
+        if self.order_type == "international" and self.qty < 10:
+            total += 3
+
         return total
 
     def mark_shipped(self):
@@ -36,17 +36,15 @@ class AbstractMelonOrder(object):
         self.shipped = True
 
 
-
-
 class DomesticMelonOrder(AbstractMelonOrder):
-    """ You fill in the rest """
+    """ Sets order_type to domestic and tax .08. """
 
     order_type = "domestic"
     tax = 0.08
 
 
 class InternationalMelonOrder(AbstractMelonOrder):
-    """ You fill in the rest """
+    """ Sets order_type to international and tax .17. Also returns country_code """
 
     order_type = "international"
     tax = 0.17
@@ -56,3 +54,14 @@ class InternationalMelonOrder(AbstractMelonOrder):
 
         return self.country_code
 
+
+
+class GovernmentMelonOrder(AbstractMelonOrder):
+    """ You fill in the rest """
+
+    tax = 0
+
+    def mark_shipped(self):
+        """Set shipped to true."""
+
+        self.shipped = True
